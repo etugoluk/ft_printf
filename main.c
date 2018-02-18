@@ -187,6 +187,8 @@ int	ft_printf(const char *s, ...)
 					g = ft_putnbr((signed char)n);
 				else if (f.length == 'w')
 					g = ft_putnbr((long long)n);
+				else if (f.conversion == 'u')
+					g = ft_putnbr((uintmax_t)n);
 				else
 				{
 					g = ft_putnbr((int)n);
