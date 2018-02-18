@@ -22,13 +22,12 @@ void	ft_putstr(char const *s)
 	int i;
 
 	i = 0;
-	if (s)
+	if (!s)
+		s = "(null)";
+	while (s[i])
 	{
-		while (s[i])
-		{
-			ft_putchar(s[i]);
-			i++;
-		}
+		ft_putchar(s[i]);
+		i++;
 	}
 }
 
