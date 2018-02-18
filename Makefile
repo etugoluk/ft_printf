@@ -5,6 +5,11 @@ SRCS = main.c \
 		ft_put.c \
 		ft_strlen.c \
 		itoa_base.c \
+		unicode.c \
+		ft_atoi.c \
+		ft_strchr.c \
+		ft_strjoin.c \
+		ft_strsub.c \
 
 INCLUDES = ft_printf.h
 

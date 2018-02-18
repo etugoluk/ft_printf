@@ -1,9 +1,9 @@
 
 #include "ft_printf.h"
 
-int pow_function(int n, int pow)
+uintmax_t pow_function(uintmax_t n, int pow)
 {
-	int result;
+	uintmax_t result;
 	int i;
 
 	result = 1;
@@ -17,11 +17,11 @@ int pow_function(int n, int pow)
 	return (result);
 }
 
-char mod(int n, int k)
+char mod(uintmax_t n, int k)
 {
 	char c;
 
-	if (n >= 0 && n <= 9)
+	if (n <= 9)
 		c = n + 48;
 	else if (k == 0)
 		c = n - 10 + 97;
@@ -32,14 +32,16 @@ char mod(int n, int k)
 	return (c); 
 }
 
-char *itoa_base(int n, int base, int k)
+char *itoa_base(uintmax_t n, int base, int k)
 {
 	int i;
 	char *number;
 
 	i = 1;
 	while (pow_function(base, i) <= n)
+	{
 		i++;
+	}
 	number = (char *)malloc(sizeof(char) * (i + 1));
 	number[i] = '\0';
 	i--;

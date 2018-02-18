@@ -32,11 +32,11 @@ void	ft_putstr(char const *s)
 	}
 }
 
-int	ft_putnbr(int n)
+int	ft_putnbr(intmax_t n)
 {
-	long	i;
-	long	n_copy;
-	long	div;
+	intmax_t 	i;
+	intmax_t	n_copy;
+	intmax_t	div;
 	int		k;
 
 	k = 0;
@@ -45,6 +45,7 @@ int	ft_putnbr(int n)
 	n_copy = n;
 	if (n < 0)
 	{
+		k++;
 		ft_putchar('-');
 		n_copy = -n_copy;
 	}
