@@ -32,16 +32,25 @@ char mod(uintmax_t n, int k)
 	return (c); 
 }
 
+int check(int base)
+{
+	if (base == 2)
+		return (64);
+	if (base == 8)
+		return (22);
+	if (base == 16)
+		return (16);
+	return (0);
+}
+
 char *itoa_base(uintmax_t n, int base, int k)
 {
 	int i;
 	char *number;
 
 	i = 1;
-	while (pow_function(base, i) <= n)
-	{
+	while (i < check(base) && pow_function(base, i) <= n)
 		i++;
-	}
 	number = (char *)malloc(sizeof(char) * (i + 1));
 	number[i] = '\0';
 	i--;

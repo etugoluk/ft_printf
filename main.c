@@ -102,7 +102,7 @@ int	ft_printf(const char *s, ...)
 				ft_putchar('%');
 				k++;
 			}
-			else if (f.conversion == 's')
+			else if (f.conversion == 's' && f.length != 'l')
 			{
 				pr = va_arg(p.args, char *);
 				r = f.min_width - ft_strlen(pr);
@@ -114,21 +114,31 @@ int	ft_printf(const char *s, ...)
 					k++;
 				}
 				ft_putstr(pr);
-				k += ft_strlen(pr);
+				if (pr)
+					k += ft_strlen(pr);
+				else
+					k += 6;
 			}
-			else if (f.conversion == 'S')
+			else if (f.conversion == 'S' || (f.conversion == 's' && f.length == 'l'))
 			{
 				ws = va_arg(p.args, wchar_t*);
 				l = 0;
-				while (ws[l] != '\0')
+				if (!ws)
 				{
-					pr = itoa_base(ws[l], 2, 0);
-					to_unicode(pr);
-					l++;
-					k++;
+					ft_putstr("(null)");
+					k += 6;
+				}
+				else
+				{
+					while (ws[l] != '\0')
+					{
+						pr = itoa_base(ws[l], 2, 0);
+						k += to_unicode(pr);
+						l++;
+					}
 				}
 			}
-			else if (f.conversion == 'C')
+			else if (f.conversion == 'C' || (f.conversion == 'c' && f.length == 'l'))
 			{
 				wc = (wchar_t)va_arg(p.args, wint_t);
 				pr = itoa_base(wc, 2, 0);
@@ -140,10 +150,9 @@ int	ft_printf(const char *s, ...)
 					q++;
 					k++;
 				}
-				to_unicode(pr);
-				k++;
+				k += to_unicode(pr);
 			}
-			else if (f.conversion == 'c')
+			else if (f.conversion == 'c' && f.length != 'l')
 			{
 				// ch = va_arg(p.args, unsigned);
 				r = f.min_width - 1;
@@ -165,8 +174,7 @@ int	ft_printf(const char *s, ...)
 					ft_putchar(ch);
 				k++;
 			}
-			else if (f.conversion == 'd' || f.conversion == 'i' || f.conversion == 'u' 
-				|| f.conversion == 'U' || f.conversion == 'D')
+			else if (f.conversion == 'd' || f.conversion == 'i' || f.conversion == 'D')
 			{
 				n = va_arg(p.args, intmax_t);
 				r = f.min_width - count_digits(n);
@@ -177,7 +185,7 @@ int	ft_printf(const char *s, ...)
 					q++;
 					k++;
 				}
-				if (f.length == 'l' || f.conversion == 'D')
+				if (f.length == 'l')
 					g = ft_putnbr((long)n);
 				else if (f.length == 'h')
 					g = ft_putnbr((short)n);
@@ -187,12 +195,26 @@ int	ft_printf(const char *s, ...)
 					g = ft_putnbr((signed char)n);
 				else if (f.length == 'w')
 					g = ft_putnbr((long long)n);
-				else if (f.conversion == 'u')
-					g = ft_putnbr((uintmax_t)n);
+				else if (f.conversion == 'D')
+					g = ft_putnbr(n);
 				else
 				{
 					g = ft_putnbr((int)n);
 				}
+				k += g;
+			}
+			else if (f.conversion == 'U' || f.conversion == 'u')
+			{
+				un = va_arg(p.args, uintmax_t);
+				r = f.min_width - count_digits(un);
+				q = 0;
+				while (q < r)
+				{
+					ft_putchar(' ');
+					q++;
+					k++;
+				}
+				g = ft_putnbr1(un);
 				k += g;
 			}
 			else if (f.conversion == 'o' || f.conversion == 'O')

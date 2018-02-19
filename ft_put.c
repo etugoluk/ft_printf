@@ -33,7 +33,7 @@ void	ft_putstr(char const *s)
 
 int	ft_putnbr(intmax_t n)
 {
-	intmax_t 	i;
+	uintmax_t 	i;
 	intmax_t	n_copy;
 	intmax_t	div;
 	int		k;
@@ -51,6 +51,32 @@ int	ft_putnbr(intmax_t n)
 	while ((n_copy / i) > 0)
 		i *= 10;
 	if (n_copy != 0)
+		i /= 10;
+	while (i != 0)
+	{
+		div = n_copy / i;
+		ft_putchar(div + 48);
+		n_copy %= i;
+		i /= 10;
+		k++;
+	}
+	return (k);
+}
+
+int	ft_putnbr1(uintmax_t n)
+{
+	uintmax_t 	i;
+	uintmax_t	n_copy;
+	uintmax_t	div;
+	int		k;
+
+	k = 0;
+	div = 0;
+	i = 1;
+	n_copy = n;
+	while ((n_copy / i) > 0 && i / 10 < 1000000000000000000)
+		i *= 10;
+	if (n_copy != 0 && n_copy / 10 < 1000000000000000000)
 		i /= 10;
 	while (i != 0)
 	{

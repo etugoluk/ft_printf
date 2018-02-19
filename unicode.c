@@ -32,7 +32,7 @@ int to_char(char *s)
 	return (result);
 }
 
-void to_unicode(char *s)
+int to_unicode(char *s)
 {
 	int n;
 	char *str;
@@ -156,4 +156,5 @@ void to_unicode(char *s)
 		str[0] = (char)to_char(tmp);
 	}
 	ft_putstr(str);
+	return (k);
 }
