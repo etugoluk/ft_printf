@@ -17,18 +17,34 @@ void	ft_putchar(char c)
 	write(1, &c, 1);
 }
 
-void	ft_putstr(char const *s)
+int	ft_putstr(char const *s)
+{
+	int i;
+
+	i = 0;
+	if (!s)
+		return (ft_putstr("(null)"));
+	while (s[i])
+	{
+		ft_putchar(s[i]);
+		i++;
+	}
+	return (i);
+}
+
+int	ft_putstrn(char const *s, int n)
 {
 	int i;
 
 	i = 0;
 	if (!s)
 		s = "(null)";
-	while (s[i])
+	while (s[i] && i < n)
 	{
 		ft_putchar(s[i]);
 		i++;
 	}
+	return (i);
 }
 
 int	ft_putnbr(intmax_t n)

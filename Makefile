@@ -1,7 +1,7 @@
 
 NAME = libftprintf.a
 
-SRCS = main.c \
+SRCS = new_main.c \
 		ft_put.c \
 		ft_strlen.c \
 		itoa_base.c \
@@ -10,6 +10,7 @@ SRCS = main.c \
 		ft_strchr.c \
 		ft_strjoin.c \
 		ft_strsub.c \
+		print.c \
 
 INCLUDES = ft_printf.h
 

@@ -34,6 +34,8 @@ int			ft_atoi(char *str)
 	i = 0;
 	i = spaces(str);
 	result = 0;
+	if (((str[i] < 48) || (str[i] > 57)))
+		return (-2);
 	if (str[i] == '-')
 		k = -1;
 	if ((str[i] == '-') || (str[i] == '+'))
