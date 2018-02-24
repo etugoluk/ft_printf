@@ -37,50 +37,104 @@ int print_s(va_list *l, t_printf f)
 	char *pr;
 	int length;
 
-	length = 0;
 	pr = va_arg(*l, char *);
+	if (f.presicion < (int)ft_strlen1(pr) && f.presicion >= 0)
+		length = f.presicion;
+	else if (f.presicion == -2)
+		length = f.min_width;
+	else
+		length = ft_strlen1(pr);
+	//printf("min %d\n", length);
 	if (f.minus == 0)
 	{
-		if (f.presicion < (int)ft_strlen(pr) && f.presicion != -1)
-			length += right_padding(f.min_width - f.presicion, f);
-		else
-			length += right_padding(f.min_width - ft_strlen(pr), f);
+		length += right_padding(f.min_width - length, f);
 	}
-	if (f.presicion != -1)
-		length += ft_putstrn(pr, f.presicion);
+	if (f.presicion != -1 && f.presicion != -2)
+		ft_putstrn(pr, f.presicion);
+	else if (f.presicion == -2)
+	{
+		// if (f.min_width >= (int)ft_strlen1(pr))
+		// 	right_padding(ft_strlen1(pr), f);
+		// else
+		//length = length - ft_strlen1(pr) + f.min_width;
+		//length = f.min_width;
+		right_padding(f.min_width, f);
+	}
 	else
-		length += ft_putstr(pr);
+		ft_putstr(pr);
 	if (f.minus == 1)
 		length += right_padding(f.min_width - length, f);
 	return (length);
 }
 
-int print_S(va_list *l, int width)
+int print_S(va_list *l, t_printf f)
 {
 	wchar_t *ws;
-	char *pr;
-	//char *tmp;
 	int length;
 	int i;
+	int k;
 
 	i = 0;
+	k = 0;
 	length = 0;
-	width = 0;
-	ws = va_arg(*l, wchar_t*);
-	if (!ws)
+	if (!(ws = va_arg(*l, wchar_t*)))
 	{
 		ft_putstr("(null)");
-		length += 6;
+		return (6);
 	}
-	else
-		while (ws[i] != '\0')
+	while (ws[i] != '\0')
+	{
+		length += bits(ws[i]);
+		i++;
+	}
+	i = 0;
+	if (f.presicion < length && f.presicion >= 0)
+	{
+		k += bits(ws[i]);
+		while (ws[i] != '\0' && k <= f.presicion)
 		{
-			//tmp = pr;
-			pr = itoa_base(ws[i], 2, 0);
-			length += to_unicode(pr);
-			//free (tmp);
+			k += bits(ws[i + 1]);
 			i++;
 		}
+		k -= bits(ws[i]);
+		if (f.presicion > k)
+			length = k;
+		else
+			length = f.presicion;
+	}
+	if (f.minus == 0)
+		length += right_padding(f.min_width - length, f);
+	i = 0;
+	k = 0;
+	if (f.presicion >= 0)
+	{
+		k += bits(ws[i]);
+		while (ws[i] != '\0' && k <= f.presicion)
+		{
+			to_unicode(ws[i]);
+			k += bits(ws[i + 1]);
+			i++;
+		}
+	}
+	else if (f.presicion != -2)
+		while (ws[i] != '\0')
+		{
+			to_unicode(ws[i]);
+			i++;
+		}
+	else if (f.presicion == -2)
+	{
+		// while (ws[i] != '\0')
+		// {
+		// 	//to_unicode(ws[i]);
+		// 	k = bits(ws[i]);
+			right_padding(f.min_width,f);
+			length = f.min_width;
+		// 	i++;
+		// }
+	}
+	if (f.minus == 1)
+		length += right_padding(f.min_width - length, f);
 	return (length);
 }
 
@@ -88,24 +142,13 @@ int print_c(va_list *l, t_printf f)
 {
 	int length;
 	char ch;
-	char *pr;
-	int q;
 
 	length = 0;
 	if (f.minus == 0)
 		length += right_padding(f.min_width - 1, f);
-	if (f.length == 'l')
-	{
-		q = va_arg(*l, int);
-		pr = itoa_base(q, 2, 0);
-		length += to_unicode(pr);
-	}
-	else
-	{
-		ch = (unsigned char)va_arg(*l, int);
-		ft_putchar(ch);
-		length++;
-	}
+	ch = (unsigned char)va_arg(*l, int);
+	ft_putchar(ch);
+	length++;
 	if (f.minus == 1)
 		length += right_padding(f.min_width - length, f);
 	return (length);
@@ -115,14 +158,12 @@ int print_C(va_list *l, t_printf f)
 {
 	int length;
 	wchar_t wc;
-	char *pr;
 
-	length = 0;
-	if (f.minus == 0)
-		length += right_padding(f.min_width - 1, f);
 	wc = (wchar_t)va_arg(*l, wint_t);
-	pr = itoa_base(wc, 2, 0);
-	length += to_unicode(pr);
+	length = bits(wc);
+	if (f.minus == 0)
+		length += right_padding(f.min_width - length, f);
+	to_unicode(wc);
 	if (f.minus == 1)
 		length += right_padding(f.min_width - length, f);
 	return (length);
@@ -204,7 +245,10 @@ int print_di(va_list *l, t_printf f)
 		n = -n;
 	if ((f.presicion == 0 || f.presicion == -2) && (n == 0))
 	{
-		ft_putchar(' ');
+		if (f.min_width > 0)
+			ft_putchar(' ');
+		else
+			length--;
 	}
 	else
 		ft_putnbr(n);
@@ -288,7 +332,7 @@ int print_O(va_list *l, t_printf f)
 		else
 				length += right_padding(f.min_width - length, f);
 	}
-	if (f.sharp == 1 && un != 0)
+	if (f.sharp == 1 && un != 0 && f.presicion < 0)
 	{
 		length++;
 		if (f.minus == 0)
@@ -302,14 +346,19 @@ int print_O(va_list *l, t_printf f)
 	}
 	if (f.presicion > count_digits(un, 1))
 		length += presicions(f.presicion - ft_strlen(pr));
-	if ((f.presicion == 0 || f.presicion == -2) && (un == 0))
+	if ((f.presicion == 0 || f.presicion == -2) && (un == 0) && (f.sharp == 0))
 	{
-		length -= ft_strlen(pr);
+		if (f.min_width > 0)
+			ft_putchar(' ');
+		else
+			length--;
 	}
 	else
 		ft_putstr(pr);
 	if (f.minus == 1)
 		length += right_padding(f.min_width - length, f);
+	free(pr);
+	pr = NULL;
 	return (length);
 }
 
@@ -345,7 +394,12 @@ int print_u(va_list *l, t_printf f)
 	if (f.presicion > count_digits(un, 1))
 		length += presicions(f.presicion - count_digits(un, 1));
 	if ((f.presicion == 0 || f.presicion == -2) && (un == 0))
-		length--;
+	{
+		if (f.min_width > 0)
+			ft_putchar(' ');
+		else
+			length--;
+	}
 	else
 		ft_putnbr1(un);
 	if (f.minus == 1)
@@ -437,6 +491,8 @@ int print_pxX(va_list *l, t_printf f)
 	length +=ft_strlen(pr);
 	if (f.minus == 1)
 		length += right_padding(f.min_width - length, f);
+	free(pr);
+	pr = NULL;
 	return (length);
 }
 
@@ -452,9 +508,9 @@ int print_xX(va_list *l, t_printf f)
 	length = ft_strlen(pr);
 	if ((f.sharp == 1 && un != 0) || (f.conversion == 'p'))
 		length += 2;
-	if (f.zero == 1 && f.sharp == 1 && un != 0)
+	if ((f.zero == 1 && f.sharp == 1 && un != 0) || (f.conversion == 'p' && f.zero == 1))
 	{	
-		if (f.conversion == 'x')
+		if (f.conversion == 'x' || (f.conversion == 'p'))
 			ft_putstr("0x");
 		if (f.conversion == 'X')
 			ft_putstr("0X");
@@ -466,7 +522,7 @@ int print_xX(va_list *l, t_printf f)
 		else
 			length += right_padding(f.min_width - length, f);
 	}
-	if ((f.zero == 0 && f.sharp == 1 && un != 0) || (f.conversion == 'p'))
+	if ((f.zero == 0 && f.sharp == 1 && un != 0) || (f.conversion == 'p' && f.zero == 0))
 	{	
 		if (f.conversion == 'x' || (f.conversion == 'p'))
 			ft_putstr("0x");
@@ -476,10 +532,17 @@ int print_xX(va_list *l, t_printf f)
 	if (f.presicion > (int)ft_strlen(pr))
 		length += presicions(f.presicion - ft_strlen(pr));
 	if ((f.presicion == 0 || f.presicion == -2) && (un == 0))
-		length--;
+	{
+		if (f.min_width > 0)
+			ft_putchar(' ');
+		else
+			length--;
+	}
 	else
 		ft_putstr(pr);
 	if (f.minus == 1)
 		length += right_padding(f.min_width - length, f);
+	free(pr);
+	pr = NULL;
 	return (length);
 }

@@ -92,7 +92,6 @@ t_printf fill_struct(const char **s)
 	while (**s != '\0' && ft_strchr("#0- + ", **s) != NULL)
 	{
 		write_flags(&f, **s);
-		//f.flag = **s;
 		(*s)++;
 	}
 	if (**s == '\0')
@@ -124,14 +123,11 @@ t_printf fill_struct(const char **s)
 		f.length = **s;
 		(*s)++;
 	}
-	//if (ft_strchr("sSpdDioOuUxXcC%", **s) != NULL)
-	//{
 	if (**s != '\0')
 	{
 		f.conversion = **s;
 		(*s)++;
 	}
-	//}
 	return (f);
 }
 
@@ -164,13 +160,13 @@ int write_struct(t_printf f, va_list *l)
 	else if (f.conversion == 'p')
 		length += print_xX(l, f);
 	else if (f.conversion == 'S' || (f.conversion == 's' && f.length == 'l'))
-		length += print_S(l, f.min_width);
+		length += print_S(l, f);
 	else if (f.conversion == 's')
 		length += print_s(l, f);
+	else if (f.conversion == 'C' || (f.conversion == 'c' && f.length == 'l'))
+		length += print_C(l, f);
 	else if (f.conversion == 'c')
 		length += print_c(l, f);
-	else if (f.conversion == 'C')
-		length += print_C(l, f);
 	else
 	{
 		if (f.minus == 0)
