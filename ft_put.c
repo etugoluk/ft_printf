@@ -12,14 +12,14 @@
 
 #include "ft_printf.h"
 
-void	ft_putchar(char c)
+void			ft_putchar(char c)
 {
 	write(1, &c, 1);
 }
 
-int	ft_putstr(char const *s)
+int				ft_putstr(char const *s)
 {
-	int i;
+	int			i;
 
 	i = 0;
 	if (!s)
@@ -32,9 +32,9 @@ int	ft_putstr(char const *s)
 	return (i);
 }
 
-int	ft_putstrn(char const *s, int n)
+int				ft_putstrn(char const *s, int n)
 {
-	int i;
+	int			i;
 
 	i = 0;
 	if (!s)
@@ -47,20 +47,17 @@ int	ft_putstrn(char const *s, int n)
 	return (i);
 }
 
-int	ft_putnbr(intmax_t n)
+void			ft_putnbr(intmax_t n)
 {
-	uintmax_t 	i;
+	uintmax_t	i;
 	intmax_t	n_copy;
 	intmax_t	div;
-	int		k;
 
-	k = 0;
 	div = 0;
 	i = 1;
 	n_copy = n;
 	if (n < 0)
 	{
-		k++;
 		ft_putchar('-');
 		n_copy = -n_copy;
 	}
@@ -74,19 +71,15 @@ int	ft_putnbr(intmax_t n)
 		ft_putchar(div + 48);
 		n_copy %= i;
 		i /= 10;
-		k++;
 	}
-	return (k);
 }
 
-int	ft_putnbr1(uintmax_t n)
+void			ft_putnbr1(uintmax_t n)
 {
-	uintmax_t 	i;
+	uintmax_t	i;
 	uintmax_t	n_copy;
 	uintmax_t	div;
-	int		k;
 
-	k = 0;
 	div = 0;
 	i = 1;
 	n_copy = n;
@@ -100,7 +93,5 @@ int	ft_putnbr1(uintmax_t n)
 		ft_putchar(div + 48);
 		n_copy %= i;
 		i /= 10;
-		k++;
 	}
-	return (k);
 }

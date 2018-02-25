@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   itoa_base.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: etugoluk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/02/24 15:55:23 by etugoluk          #+#    #+#             */
+/*   Updated: 2018/02/24 15:55:24 by etugoluk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_printf.h"
 
-uintmax_t pow_function(uintmax_t n, int pow)
+uintmax_t		pow_function(uintmax_t n, int pow)
 {
-	uintmax_t result;
-	int i;
+	uintmax_t	result;
+	int			i;
 
 	result = 1;
 	i = 0;
@@ -17,9 +28,9 @@ uintmax_t pow_function(uintmax_t n, int pow)
 	return (result);
 }
 
-char mod(uintmax_t n, int k)
+char			mod(uintmax_t n, int k)
 {
-	char c;
+	char		c;
 
 	if (n <= 9)
 		c = n + 48;
@@ -29,10 +40,10 @@ char mod(uintmax_t n, int k)
 		c = n - 10 + 65;
 	else
 		c = '\0';
-	return (c); 
+	return (c);
 }
 
-int check(int base)
+int				check(int base)
 {
 	if (base == 2)
 		return (64);
@@ -43,10 +54,10 @@ int check(int base)
 	return (0);
 }
 
-char *itoa_base(uintmax_t n, int base, int k)
+char			*itoa_base(uintmax_t n, int base, int k)
 {
-	int i;
-	char *number;
+	int			i;
+	char		*number;
 
 	i = 1;
 	while (i < check(base) && pow_function(base, i) <= n)
@@ -62,12 +73,3 @@ char *itoa_base(uintmax_t n, int base, int k)
 	}
 	return (number);
 }
-
-// int main()
-// {
-// 	printf("%s\n", itoa_base(125, 8, 1));
-// 	printf("%s\n", itoa_base(125, 16, 1));
-// 	printf("%s\n", itoa_base(256, 8, 1));
-// 	printf("%s\n", itoa_base(256, 16, 1));
-// 	return (0);
-// }

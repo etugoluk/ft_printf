@@ -1,34 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strsub.c                                        :+:      :+:    :+:   */
+/*   new_main.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: etugoluk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/30 14:18:35 by etugoluk          #+#    #+#             */
-/*   Updated: 2017/10/30 14:18:36 by etugoluk         ###   ########.fr       */
+/*   Created: 2018/02/24 13:18:03 by etugoluk          #+#    #+#             */
+/*   Updated: 2018/02/24 13:18:05 by etugoluk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*ft_strsub(char const *s, unsigned int start, size_t len)
+int				ft_printf(const char *s, ...)
 {
-	size_t	i;
-	char	*new;
+	int			length;
+	t_printf	f;
+	va_list		l;
 
-	i = 0;
-	if (!s)
-		return (NULL);
-	new = (char *)malloc(sizeof(char) * (len + 1));
-	if (!new)
-		return (NULL);
-	while (i < len)
+	length = 0;
+	va_start(l, s);
+	while (*s != '\0')
 	{
-		new[i] = s[start];
-		i++;
-		start++;
+		if (*s == '%')
+		{
+			s++;
+			f = fill_struct(&s);
+			length += write_struct(f, &l);
+		}
+		else
+		{
+			ft_putchar(*s);
+			s++;
+			length++;
+		}
 	}
-	new[i] = '\0';
-	return (new);
+	va_end(l);
+	return (length);
 }

@@ -1,17 +1,29 @@
+#******************************************************************************#
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: etugoluk <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2018/02/24 13:43:50 by etugoluk          #+#    #+#              #
+#    Updated: 2018/02/24 13:43:51 by etugoluk         ###   ########.fr        #
+#                                                                              #
+#******************************************************************************#
 
 NAME = libftprintf.a
 
-SRCS = new_main.c \
+SRCS = main.c \
+		struct.c \
 		ft_put.c \
-		ft_strlen.c \
 		itoa_base.c \
 		unicode.c \
-		ft_atoi.c \
-		ft_strchr.c \
-		ft_strjoin.c \
-		ft_strsub.c \
 		print.c \
-
+		count_digits.c \
+		print_cs.c \
+		print_ou.c \
+		print_di.c \
+		print_px.c \
+		
 INCLUDES = ft_printf.h
 
 BINS = $(SRCS:.c=.o)

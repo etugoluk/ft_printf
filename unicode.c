@@ -1,24 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unicode.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: etugoluk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/02/24 15:52:12 by etugoluk          #+#    #+#             */
+/*   Updated: 2018/02/24 15:52:13 by etugoluk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int bits(wchar_t chr)
+int		bits(wchar_t chr)
 {
-	//if (chr < (1 << 7))
 	if (chr <= 0x7F)
 		return (1);
-	//else if (chr < (1 << 11))
 	else if (chr <= 0x7FF)
 		return (2);
-	//else if (chr < (1 << 16))
 	else if (chr <= 0xFFFF)
 		return (3);
 	else if (chr <= 0x10FFFF)
-	//else if (chr < (1 << 21))
 		return (4);
 	return (0);
 }
 
-void to_unicode(wchar_t chr)
+void	to_unicode(wchar_t chr)
 {
 	if (chr <= 0x7F)
 		ft_putchar(chr);
