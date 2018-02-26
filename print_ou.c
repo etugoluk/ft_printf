@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-uintmax_t			length_ou(va_list *l, t_printf f)
+static uintmax_t			length_ou(va_list *l, t_printf f)
 {
 	if (f.c == 'U' || f.c == 'O')
 		return (va_arg(*l, uintmax_t));

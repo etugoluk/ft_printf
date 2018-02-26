@@ -37,7 +37,7 @@ int				print_s(va_list *l, t_printf f)
 	return (length);
 }
 
-int				ls_print(t_printf f, wchar_t *ws, int length)
+static int				ls_print(t_printf f, wchar_t *ws, int length)
 {
 	int			i;
 	int			k;
@@ -75,6 +75,8 @@ int				print_ls(va_list *l, t_printf f)
 	i = 0;
 	k = 0;
 	length = 0;
+	if (f.pr == -3)
+		f.pr = va_arg(*l, int);
 	if (!(ws = va_arg(*l, wchar_t*)))
 	{
 		ft_putstr("(null)");

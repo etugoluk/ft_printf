@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int		bits(wchar_t chr)
+int			bits(wchar_t chr)
 {
 	if (chr <= 0x7F)
 		return (1);
@@ -25,7 +25,7 @@ int		bits(wchar_t chr)
 	return (0);
 }
 
-void	to_unicode(wchar_t chr)
+void		to_unicode(wchar_t chr)
 {
 	if (chr <= 0x7F)
 		ft_putchar(chr);

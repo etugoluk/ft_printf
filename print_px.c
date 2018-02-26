@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-char			*right_pr(t_printf f, uintmax_t un)
+static char		*right_pr(t_printf f, uintmax_t un)
 {
 	int			k;
 
@@ -36,7 +36,7 @@ char			*right_pr(t_printf f, uintmax_t un)
 	return (NULL);
 }
 
-int				flags_px(t_printf f, char *pr, uintmax_t un)
+static int		flags_px(t_printf f, char *pr, uintmax_t un)
 {
 	int			length;
 

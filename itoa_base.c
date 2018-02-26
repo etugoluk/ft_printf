@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-uintmax_t		pow_function(uintmax_t n, int pow)
+static uintmax_t	pow_function(uintmax_t n, int pow)
 {
 	uintmax_t	result;
 	int			i;
@@ -28,7 +28,7 @@ uintmax_t		pow_function(uintmax_t n, int pow)
 	return (result);
 }
 
-char			mod(uintmax_t n, int k)
+static char		mod(uintmax_t n, int k)
 {
 	char		c;
 
@@ -43,7 +43,7 @@ char			mod(uintmax_t n, int k)
 	return (c);
 }
 
-int				check(int base)
+static int		check(int base)
 {
 	if (base == 2)
 		return (64);

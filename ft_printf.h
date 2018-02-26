@@ -12,7 +12,6 @@
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
-# include <stdio.h>
 # include <stdarg.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -31,40 +30,38 @@ typedef struct	s_printf
 	char		c;
 }				t_printf;
 
-int				ft_atoi(char *str);
-char			*ft_strchr(const char *s, int c);
-int				bits(wchar_t chr);
-void			to_unicode(wchar_t wc);
-uintmax_t		pow_function(uintmax_t n, int pow);
-char			mod(uintmax_t n, int k);
-int				check(int base);
-char			*itoa_base(uintmax_t n, int base, int k);
-void			ft_putchar(char c);
-int				ft_putstr(char const *s);
-void			ft_putnbr(intmax_t n);
-size_t			ft_strlen(const char *s);
 int				ft_printf(const char *s, ...);
-void			ft_putnbr1(uintmax_t n);
-t_printf		fill_struct(const char **s);
+t_printf		fill_struct(const char **s, va_list *l);
 int				write_struct(t_printf f, va_list *l);
-int				digits(intmax_t n, int k);
-int				print_procent(t_printf f, char c);
-int				print_c(va_list *l, t_printf f);
-int				print_lc(va_list *l, t_printf f);
+void			zero_struct(t_printf *f);
+void			f_flags(t_printf *f, char c);
+void			f_length(const char **s, char *length);
+void			f_width(const char **s, va_list *l, t_printf *f);
+void			f_pr(const char **s, va_list *l, t_printf *f);
+int				print_di(va_list *l, t_printf f);
 int				print_s(va_list *l, t_printf f);
 int				print_ls(va_list *l, t_printf f);
-int				print_di(va_list *l, t_printf f);
-int				print_px(va_list *l, t_printf f);
+int				print_c(va_list *l, t_printf f);
+int				print_lc(va_list *l, t_printf f);
 int				print_o(va_list *l, t_printf f);
 int				print_u(va_list *l, t_printf f);
-char			*right_pr(t_printf f, uintmax_t un);
-void			zero_struct(t_printf *f);
-int				padding(int r, t_printf f);
-uintmax_t		length_ou(va_list *l, t_printf f);
-int				ft_putstrn(char const *s, int n);
-intmax_t		integer(va_list *l, t_printf f);
+int				print_px(va_list *l, t_printf f);
+int				print_procent(t_printf f, char c);
+int				bits(wchar_t chr);
+void			to_unicode(wchar_t chr);
+char			*ft_strchr(const char *s, int c);
+int				ft_atoi(char *str);
+int				digits(intmax_t n, int k);
 int				digitsu(uintmax_t n);
+void			ft_putchar(char c);
+int				ft_putstr(char const *s);
+int				ft_putstrn(char const *s, int n);
+void			ft_putnbr(intmax_t n);
+void			ft_putnbr1(uintmax_t n);
+char			*itoa_base(uintmax_t n, int base, int k);
+size_t			ft_strlen(const char *s);
 size_t			ft_strlen1(const char *s);
-void			f_length(const char **s, char *length);
+int				padding(int r, t_printf f);
 int				presicions(int n);
+
 #endif

@@ -25,18 +25,6 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-static int	spaces(const char *str)
-{
-	int		i;
-
-	i = 0;
-	while (str[i] == '\n' || str[i] == '\t' ||
-		str[i] == '\r' || str[i] == '\v' ||
-		str[i] == '\f' || str[i] == ' ')
-		i++;
-	return (i);
-}
-
 int			ft_atoi(char *str)
 {
 	int					i;
@@ -45,7 +33,6 @@ int			ft_atoi(char *str)
 
 	k = 1;
 	i = 0;
-	i = spaces(str);
 	result = 0;
 	if (((str[i] < 48) || (str[i] > 57)))
 		return (-2);
