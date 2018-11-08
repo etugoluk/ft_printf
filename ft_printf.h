@@ -59,8 +59,7 @@ int				ft_putstrn(char const *s, int n);
 void			ft_putnbr(intmax_t n);
 void			ft_putnbr1(uintmax_t n);
 char			*itoa_base(uintmax_t n, int base, int k);
-size_t			ft_strlen(const char *s);
-size_t			ft_strlen1(const char *s);
+size_t			len(const char *s);
 int				padding(int r, t_printf f);
 int				presicions(int n);
 

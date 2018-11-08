@@ -55,7 +55,7 @@ void			f_length(const char **s, char *length)
 		*length = *(*s)++;
 }
 
-void		f_width(const char **s, va_list *l, t_printf *f)
+void			f_width(const char **s, va_list *l, t_printf *f)
 {
 	if ((**s >= 48 && **s <= 57) || (**s == '*'))
 	{
@@ -69,7 +69,7 @@ void		f_width(const char **s, va_list *l, t_printf *f)
 	}
 }
 
-void		f_pr(const char **s, va_list *l, t_printf *f)
+void			f_pr(const char **s, va_list *l, t_printf *f)
 {
 	if (**s == '.')
 	{

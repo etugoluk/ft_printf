@@ -14,8 +14,8 @@
 
 static uintmax_t	pow_function(uintmax_t n, int pow)
 {
-	uintmax_t	result;
-	int			i;
+	uintmax_t		result;
+	int				i;
 
 	result = 1;
 	i = 0;
@@ -28,9 +28,9 @@ static uintmax_t	pow_function(uintmax_t n, int pow)
 	return (result);
 }
 
-static char		mod(uintmax_t n, int k)
+static char			mod(uintmax_t n, int k)
 {
-	char		c;
+	char			c;
 
 	if (n <= 9)
 		c = n + 48;
@@ -43,7 +43,7 @@ static char		mod(uintmax_t n, int k)
 	return (c);
 }
 
-static int		check(int base)
+static int			check(int base)
 {
 	if (base == 2)
 		return (64);
@@ -54,10 +54,10 @@ static int		check(int base)
 	return (0);
 }
 
-char			*itoa_base(uintmax_t n, int base, int k)
+char				*itoa_base(uintmax_t n, int base, int k)
 {
-	int			i;
-	char		*number;
+	int				i;
+	char			*number;
 
 	i = 1;
 	while (i < check(base) && pow_function(base, i) <= n)

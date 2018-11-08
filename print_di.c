@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static intmax_t		integer(va_list *l, t_printf f)
+static intmax_t			integer(va_list *l, t_printf f)
 {
 	if (f.length == 'l')
 		return (long)va_arg(*l, intmax_t);
@@ -59,10 +59,10 @@ static int				di_flags(t_printf f, intmax_t n, int k)
 	return (length);
 }
 
-int				print_di(va_list *l, t_printf f)
+int						print_di(va_list *l, t_printf f)
 {
-	int			length;
-	intmax_t	n;
+	int					length;
+	intmax_t			n;
 
 	n = integer(l, f);
 	length = digits(n, 1);

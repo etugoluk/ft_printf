@@ -38,10 +38,10 @@ static char		*right_pr(t_printf f, uintmax_t un)
 
 static int		flags_px(t_printf f, char *pr, uintmax_t un)
 {
-	int			length;
+	int			l;
 
-	length = ft_strlen(pr); 
-	length += ((f.sharp == 1 && un != 0) || (f.c == 'p')) ? 2 : 0;
+	l = len(pr);
+	l += ((f.sharp == 1 && un != 0) || (f.c == 'p')) ? 2 : 0;
 	if ((f.zero == 1 && f.sharp == 1 && un != 0) ||
 		(f.c == 'p' && f.zero == 1))
 	{
@@ -51,7 +51,8 @@ static int		flags_px(t_printf f, char *pr, uintmax_t un)
 			ft_putstr("0X");
 	}
 	if (f.minus == 0)
-		length += (f.pr > (int)ft_strlen(pr)) ? padding(f.width - length - (f.pr - ft_strlen(pr)), f) : padding(f.width - length, f);;
+		l += (f.pr > (int)len(pr)) ?
+		padding(f.width - l - f.pr + len(pr), f) : padding(f.width - l, f);
 	if ((f.zero == 0 && f.sharp == 1 && un != 0) ||
 		(f.c == 'p' && f.zero == 0))
 	{
@@ -60,8 +61,8 @@ static int		flags_px(t_printf f, char *pr, uintmax_t un)
 		if (f.c == 'X')
 			ft_putstr("0X");
 	}
-	length += (f.pr > (int)ft_strlen(pr)) ? presicions(f.pr - ft_strlen(pr)) : 0;
-	return (length);
+	l += (f.pr > (int)len(pr)) ? presicions(f.pr - len(pr)) : 0;
+	return (l);
 }
 
 int				print_px(va_list *l, t_printf f)

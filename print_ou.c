@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static uintmax_t			length_ou(va_list *l, t_printf f)
+static uintmax_t	length_ou(va_list *l, t_printf f)
 {
 	if (f.c == 'U' || f.c == 'O')
 		return (va_arg(*l, uintmax_t));
@@ -39,15 +39,15 @@ int					print_o(va_list *l, t_printf f)
 
 	un = length_ou(l, f);
 	pr = itoa_base(un, 8, 0);
-	length = ft_strlen(pr);
+	length = len(pr);
 	if (f.sharp == 1 && un != 0 && f.pr < 0)
 		length++;
 	if (f.minus == 0)
-		length += (f.pr > (int)ft_strlen(pr)) ? padding(f.width
-		- length - f.pr + ft_strlen(pr), f) : padding(f.width - length, f);
+		length += (f.pr > (int)len(pr)) ? padding(f.width
+		- length - f.pr + len(pr), f) : padding(f.width - length, f);
 	if (f.sharp == 1 && un != 0 && f.pr < 0)
 		ft_putchar('0');
-	length += (f.pr > digits(un, 1)) ? presicions(f.pr - ft_strlen(pr)) : 0;
+	length += (f.pr > digits(un, 1)) ? presicions(f.pr - len(pr)) : 0;
 	if ((f.pr == 0 || f.pr == -2) && (un == 0) && (f.sharp == 0))
 		if (f.width > 0)
 			ft_putchar(' ');

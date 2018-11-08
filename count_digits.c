@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-char	*ft_strchr(const char *s, int c)
+char					*ft_strchr(const char *s, int c)
 {
 	while (*s != '\0')
 	{
@@ -25,7 +25,7 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-int			ft_atoi(char *str)
+int						ft_atoi(char *str)
 {
 	int					i;
 	unsigned long long	result;
@@ -51,10 +51,10 @@ int			ft_atoi(char *str)
 	return ((int)result * k);
 }
 
-int				digits(intmax_t n, int k)
+int						digits(intmax_t n, int k)
 {
-	int			size;
-	intmax_t	i;
+	int					size;
+	intmax_t			i;
 
 	size = 1;
 	i = 1;
@@ -80,10 +80,10 @@ int				digits(intmax_t n, int k)
 	return (size);
 }
 
-int				digitsu(uintmax_t n)
+int						digitsu(uintmax_t n)
 {
-	int			size;
-	uintmax_t	i;
+	int					size;
+	uintmax_t			i;
 
 	size = 1;
 	i = 1;

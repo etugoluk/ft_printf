@@ -23,7 +23,7 @@ t_printf		fill_struct(const char **s, va_list *l)
 		return (f);
 	f_width(s, l, &f);
 	f_width(s, l, &f);
-	f_pr(s, l ,&f);
+	f_pr(s, l, &f);
 	f_length(s, &f.length);
 	if (**s != '\0')
 		f.c = *(*s)++;

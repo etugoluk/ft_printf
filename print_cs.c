@@ -18,12 +18,12 @@ int				print_s(va_list *l, t_printf f)
 	int			length;
 
 	pr = va_arg(*l, char *);
-	if (f.pr < (int)ft_strlen1(pr) && f.pr >= 0)
+	if (f.pr < (int)len(pr) && f.pr >= 0)
 		length = f.pr;
 	else if (f.pr == -2)
 		length = f.width;
 	else
-		length = ft_strlen1(pr);
+		length = len(pr);
 	if (f.minus == 0)
 		length += padding(f.width - length, f);
 	if (f.pr >= 0)
@@ -37,13 +37,14 @@ int				print_s(va_list *l, t_printf f)
 	return (length);
 }
 
-static int				ls_print(t_printf f, wchar_t *ws, int length)
+static int		ls_print(t_printf f, wchar_t *ws, int length)
 {
 	int			i;
 	int			k;
 
 	i = 0;
 	k = 0;
+	length += (f.minus == 0) ? padding(f.width - length, f) : 0;
 	if (f.pr >= 0)
 	{
 		k += bits(ws[i]);
@@ -73,27 +74,24 @@ int				print_ls(va_list *l, t_printf f)
 	int			k;
 
 	i = 0;
-	k = 0;
 	length = 0;
-	if (f.pr == -3)
-		f.pr = va_arg(*l, int);
+	f.pr = (f.pr == -3) ? va_arg(*l, int) : f.pr;
 	if (!(ws = va_arg(*l, wchar_t*)))
 	{
 		ft_putstr("(null)");
 		return (6);
 	}
+	k = bits(ws[0]);
 	while (ws[i] != '\0')
 		length += bits(ws[i++]);
 	i = 0;
 	if (f.pr < length && f.pr >= 0)
 	{
-		k += bits(ws[i]);
 		while (ws[i++] != '\0' && k <= f.pr)
 			k += bits(ws[i]);
 		k -= bits(ws[i]);
 		length = (f.pr > k) ? k : f.pr;
 	}
-	length += (f.minus == 0) ? padding(f.width - length, f) : 0;
 	return (ls_print(f, ws, length));
 }
 
